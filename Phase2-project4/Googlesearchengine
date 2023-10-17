@@ -1,0 +1,59 @@
+package com.app.Junit.Lesson4project;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class Googlesearchengine {
+	
+	// Create your own annotation and use
+	// Add displayname annotation
+	// repeat the test case 3 times
+	// Make it a parmeterized test using csvsource
+	
+	WebDriver driver;
+	
+	@BeforeAll
+	public void startbrowser()
+	{
+        driver = new ChromeDriver();
+		
+		driver.manage().window().maximize();
+		
+		driver.get("https://www.google.co.in/");
+		//driver.get("https://www.instagram.com/accounts/login/?hl=en");
+		
+	}
+	
+	@ParameterizedTest
+	@DisplayName("locating elements")
+	@CsvSource({"instagram ,admin"
+	})
+
+	public void Testmethod(String username, String pwd) throws InterruptedException 
+	{
+        driver.findElement(By.id("APjFqb")).sendKeys(username);
+        //driver.findElement(By.linkText("My Account")).click();
+    	//driver.findElement(By.xpath("//input[@id='APjFqb']")).sendKeys("instagram");
+    	//driver.findElement(By.xpath("//input[@name='btnK']")).sendKeys(Keys.ENTER);
+        //driver.findElement(By.id("input[name='password']")).sendKeys(pwd);
+		Thread.sleep(2000);
+	}
+
+	
+	@AfterAll
+	public void closebrowser()
+	{
+		driver.close();
+	}
+	
+}
